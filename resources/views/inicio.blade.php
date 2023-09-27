@@ -23,6 +23,7 @@
                                 <th>Eliminar</th>
                             </thead>
                             <tbody>
+                                @csrf
                                 @foreach ($datos as $dato)
                                     <tr>
                                         <td>{{$dato->paterno}}</td>
@@ -33,7 +34,7 @@
                                             <button class="btn btn-warning btn-sm"><i class="fa-solid fa-user-pen"></i></button>
                                         </td>
                                         <td>
-                                            <button class="btn btn-danger btn-sm"><i class="fa-solid fa-user-xmark"></i></button>
+                                            <button class="btn btn-danger btn-sm bt-delete" data-idd="{{$dato->id}}"><i class="fa-solid fa-user-xmark" ></i></button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -43,4 +44,5 @@
                 </p>
             </div>
         </div>
+        <script async src="{{asset('js/fnc_eliminar.js')}}"></script>
     @endsection

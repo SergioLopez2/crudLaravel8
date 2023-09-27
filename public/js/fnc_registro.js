@@ -1,4 +1,4 @@
-console.log("HOÑLAS");
+console.log("FNC_REGISTRO");
 $('body').on('submit', '#btn-registro', function (e){
     e.preventDefault();
     var ajaxData={};

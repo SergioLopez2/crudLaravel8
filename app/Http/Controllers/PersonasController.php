@@ -65,8 +65,25 @@ class PersonasController extends Controller{
      * @param  \App\Models\Personas  $personas
      * @return \Illuminate\Http\Response
      */
-    public function show(Personas $personas){
-        return view("eliminar");
+    public function show(){
+        $id= $_POST['idEliminar'];
+        if ($_POST) {
+            if (!is_numeric($id) || $id<=0) {
+                return response()->json(['success' => false, 'errors' => $_POST]);
+            }
+            $dato=Personas::find($id);//Busca el valor en el modelo PERSONAS
+            if (!$dato) {
+                return response()->json(['success' => false, 'errors' => $dato]);
+            }
+            if ($dato->delete()) {
+                return response()->json(['success' => true, 'redirect' => route('personas.index')]);
+            } else {
+                return response()->json(['success' => false, 'errors' => $dato]);
+            }
+            //print("<pre>" . print_r(, true) . "</pre>");
+        } else {
+            return response()->json(['success' => false, 'errors' => $_POST]);
+        }
     }
 
     /**
