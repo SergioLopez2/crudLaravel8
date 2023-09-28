@@ -31,7 +31,7 @@
                                         <td>{{$dato->nombre}}</td>
                                         <td>{{$dato->fecha_nacimiento}}</td>
                                         <td>
-                                            <button class="btn btn-warning btn-sm"><i class="fa-solid fa-user-pen"></i></button>
+                                            <button class="btn btn-warning btn-sm bt-update" data-idu="{{$dato->id}}"><i class="fa-solid fa-user-pen"></i></button>
                                         </td>
                                         <td>
                                             <button class="btn btn-danger btn-sm bt-delete" data-idd="{{$dato->id}}"><i class="fa-solid fa-user-xmark" ></i></button>
@@ -45,4 +45,5 @@
             </div>
         </div>
         <script async src="{{asset('js/fnc_eliminar.js')}}"></script>
+        <script async src="{{asset('js/fnc_actualizar.js')}}"></script>
     @endsection

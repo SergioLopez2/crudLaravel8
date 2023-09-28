@@ -92,8 +92,17 @@ class PersonasController extends Controller{
      * @param  \App\Models\Personas  $personas
      * @return \Illuminate\Http\Response
      */
-    public function edit(Personas $personas){
-        return view('actualizar');
+    public function edit($id){
+        //print("<pre>" . print_r($id, true) . "</pre>");
+        if (!is_numeric($id) || $id <= 0) {
+            return response()->json(['success' => false, 'errors' => $id]);
+        }
+        $dato = Personas::find($id); //Busca el valor en el modelo PERSONAS
+        if (!$dato) {
+            return response()->json(['success' => false, 'errors' => $dato]);
+        }
+        session(['persona' => $dato]);
+        return response()->json(['success' => true, 'redirect' => route('personas.vistaUpdate')]);
     }
 
     /**
@@ -103,8 +112,28 @@ class PersonasController extends Controller{
      * @param  \App\Models\Personas  $personas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Personas $personas){
-        //
+    public function vistaUpdate(){
+        return view('actualizar');
+    }
+    public function update(Request $request,$id){
+        //print("<pre>" . print_r($id, true) . "</pre>");
+        if (!is_numeric($id) || $id <= 0) {
+            return response()->json(['success' => false, 'errors' => $id]);
+        }
+        $personas = Personas::findOrFail($id); //Busca el valor en el modelo PERSONAS
+        if (!$personas) {
+            return response()->json(['success' => false, 'errors' => $personas]);
+        }
+        $personas->paterno = $request->input('paterno');
+        $personas->materno = $request->input('materno');
+        $personas->nombre = $request->input('nombre');
+        $personas->fecha_nacimiento = $request->input('nacimiento');
+        if ($personas->save()) {
+            session()->forget('persona');
+            return response()->json(['success' => true, 'redirect' => route('personas.index')]);
+        } else {
+            return response()->json(['success' => false, 'errors' => $personas]);
+        }
     }
 
     /**
